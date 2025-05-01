@@ -11,11 +11,11 @@
             padding: 0;
             background-color: #f0f0f0;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Sắp xếp theo chiều dọc */
             align-items: center;
-            min-height: 100vh;
-            overflow-y: auto;
-            padding-top: 20px;
+            min-height: 100vh; /* Đảm bảo body có chiều cao tối thiểu */
+            overflow-y: auto; /* Cho phép cuộn dọc */
+            padding-top: 20px; /* Thêm khoảng cách ở trên cùng */
         }
 
         .bio-container {
@@ -25,11 +25,12 @@
             text-align: center;
             padding: 30px;
             max-width: 400px;
-            width: 90%;
-            margin-bottom: 20px;
+            width: 90%; /* Sử dụng 90% chiều rộng để dễ dàng hiển thị trên các màn hình nhỏ */
+            margin-bottom: 20px; /* Khoảng cách giữa bio và gallery */
             transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
-            position: relative;
-            z-index: 2;
+            will-change: transform, box-shadow; /* Tối ưu hoá hiệu suất */
+            position: relative; /* Để có thể điều chỉnh vị trí nếu cần */
+            z-index: 2; /* Đảm bảo nó nằm trên các phần khác */
         }
 
         .bio-container img {
@@ -69,12 +70,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 90%;
+            width: 90%; /* Sử dụng 90% chiều rộng để dễ dàng hiển thị trên các màn hình nhỏ */
             padding: 20px;
             background-color: #fff;
             border-radius: 15px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            margin-top: 20px; /* Khoảng cách giữa bio và gallery */
         }
 
         .gallery h2 {
@@ -84,72 +85,41 @@
         }
 
         .gallery-images {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr); /* 8 ảnh mỗi hàng */
-            gap: 10px;
-            justify-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .gallery-images img {
-            width: 100%; /* Chiều rộng tối đa 100% */
-            height: 150px; /* Chiều cao cố định */
-            object-fit: cover; /* Giữ tỷ lệ mà không bị bóp méo */
+            width: 150px;
+            height: 150px;
+            margin: 10px;
             border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
         }
 
-        /* Hiển thị kích thước thật khi di chuột vào */
         .gallery-images img:hover {
-            transform: scale(1.05); /* Phóng to ảnh một chút khi di chuột */
+            transform: scale(1.05);
         }
 
-        /* Overlay khi click vào ảnh */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .video-container {
+            margin-top: 20px;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: none; /* Ẩn overlay mặc định */
+            display: flex;
             justify-content: center;
-            align-items: center;
-            z-index: 100;
         }
 
-        .overlay img {
-            max-width: 90%;
-            max-height: 90%;
+        .video-container iframe {
+            width: 300px;
+            height: 200px;
             border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .overlay.active {
-            display: flex; /* Hiển thị overlay khi active */
-        }
-
-        /* Hiển thị kích thước thật khi di chuột vào */
-        .gallery-images img::after {
-            content: attr(data-dimensions); /* Hiển thị chiều rộng và chiều cao */
-            position: absolute;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            z-index: 10;
-            font-size: 12px;
-            display: none; /* Ẩn mặc định */
-        }
-
-        /* Hiện khi di chuột */
-        .gallery-images img:hover::after {
-            display: block; /* Hiển thị kích thước khi di chuột */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-
 
     <div class="bio-container" id="bioContainer">
         <img src="https://via.placeholder.com/150" alt="Profile Picture">
@@ -166,131 +136,57 @@
     <div class="gallery">
         <h2>Gallery</h2>
         <div class="gallery-images">
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/0sBR5Gb.jpeg" alt="Image 1" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/XZNZ3Lh.jpeg" alt="Image 2" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/rsNSYfG.jpeg" alt="Image 3" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/qL5UJBA.jpeg" alt="Image 4" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/gS8JnU7.jpeg" alt="Image 5" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/bFRw1LS.jpeg" alt="Image 6" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/LTG80eR.jpeg" alt="Image 7" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/KUMWZMu.jpeg" alt="Image 8" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/GywYIiq.jpeg" alt="Image 9" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/Gk9ARvR.jpeg" alt="Image 10" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/ecCI61h.jpeg" alt="Image 11" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/60EFbLb.jpeg" alt="Image 12" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/jyYFS9W.png" alt="Image 13" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/P8SiOkY.png" alt="Image 14" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/xuYn0m6.png" alt="Image 15" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/O9mk61b.jpeg" alt="Image 16" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/7u5wqP9.jpeg" alt="Image 17" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/0MP7kAl.jpeg" alt="Image 18" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/QusLLDO.jpeg" alt="Image 19" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/G8qxLX2.jpeg" alt="Image 20" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/YhgeujX.jpeg" alt="Image 21" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/hDaIWdK.jpeg" alt="Image 22" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/emeSDxu.jpeg" alt="Image 23" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/mNxUwGb.jpeg" alt="Image 24" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/8fD87Cl.jpeg" alt="Image 25" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/ukLfKTI.jpeg" alt="Image 26" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/RCCzqfw.jpeg" alt="Image 27" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/pRwbeh0.jpeg" alt="Image 28" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/QNmKDsJ.jpeg" alt="Image 29" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/zeLGZVv.jpeg" alt="Image 30" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/Lsf5WjX.jpeg" alt="Image 31" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/5Wlal89.jpeg" alt="Image 32" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/u9YT3Fu.jpeg" alt="Image 33" data-dimensions="800x600">
-            </div>
-            <div style="position: relative;">
-                <img src="https://i.imgur.com/g0cDVvt.jpeg" alt="Image 34" data-dimensions="800x600">
-            </div>
+            <!-- 38 images -->
+            <img src="https://via.placeholder.com/150" alt="Image 1">
+            <img src="https://via.placeholder.com/150" alt="Image 2">
+            <img src="https://via.placeholder.com/150" alt="Image 3">
+            <img src="https://via.placeholder.com/150" alt="Image 4">
+            <img src="https://via.placeholder.com/150" alt="Image 5">
+            <img src="https://via.placeholder.com/150" alt="Image 6">
+            <img src="https://via.placeholder.com/150" alt="Image 7">
+            <img src="https://via.placeholder.com/150" alt="Image 8">
+            <img src="https://via.placeholder.com/150" alt="Image 9">
+            <img src="https://via.placeholder.com/150" alt="Image 10">
+            <img src="https://via.placeholder.com/150" alt="Image 11">
+            <img src="https://via.placeholder.com/150" alt="Image 12">
+            <img src="https://via.placeholder.com/150" alt="Image 13">
+            <img src="https://via.placeholder.com/150" alt="Image 14">
+            <img src="https://via.placeholder.com/150" alt="Image 15">
+            <img src="https://via.placeholder.com/150" alt="Image 16">
+            <img src="https://via.placeholder.com/150" alt="Image 17">
+            <img src="https://via.placeholder.com/150" alt="Image 18">
+            <img src="https://via.placeholder.com/150" alt="Image 19">
+            <img src="https://via.placeholder.com/150" alt="Image 20">
+            <img src="https://via.placeholder.com/150" alt="Image 21">
+            <img src="https://via.placeholder.com/150" alt="Image 22">
+            <img src="https://via.placeholder.com/150" alt="Image 23">
+            <img src="https://via.placeholder.com/150" alt="Image 24">
+            <img src="https://via.placeholder.com/150" alt="Image 25">
+            <img src="https://via.placeholder.com/150" alt="Image 26">
+            <img src="https://via.placeholder.com/150" alt="Image 27">
+            <img src="https://via.placeholder.com/150" alt="Image 28">
+            <img src="https://via.placeholder.com/150" alt="Image 29">
+            <img src="https://via.placeholder.com/150" alt="Image 30">
+            <img src="https://via.placeholder.com/150" alt="Image 31">
+            <img src="https://via.placeholder.com/150" alt="Image 32">
+            <img src="https://via.placeholder.com/150" alt="Image 33">
+            <img src="https://via.placeholder.com/150" alt="Image 34">
+            <img src="https://via.placeholder.com/150" alt="Image 35">
+            <img src="https://via.placeholder.com/150" alt="Image 36">
+            <img src="https://via.placeholder.com/150" alt="Image 37">
+            <img src="https://via.placeholder.com/150" alt="Image 38">
+        </div>
+
+        <h2>Videos</h2>
+        <div class="video-container">
+            <!-- 5 videos -->
+            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
-
-    <div class="overlay" id="overlay">
-        <img id="overlay-img" src="" alt="Overlay Image">
-    </div>
-
-    <script>
-        const overlay = document.getElementById('overlay');
-        const overlayImg = document.getElementById('overlay-img');
-        const images = document.querySelectorAll('.gallery-images img');
-
-        images.forEach(img => {
-            img.addEventListener('click', () => {
-                overlayImg.src = img.src; // Đặt nguồn ảnh cho overlay
-                overlay.classList.add('active'); // Kích hoạt overlay
-            });
-        });
-
-        overlay.addEventListener('click', () => {
-            overlay.classList.remove('active'); // Tắt overlay khi click
-        });
-    </script>
 
     <script>
         const bioContainer = document.getElementById('bioContainer');
@@ -309,7 +205,7 @@
             const offsetX = e.offsetX;
             const offsetY = e.offsetY;
 
-            // Calculate rotation angles
+            // Tính toán góc xoay
             rotateX = ((offsetY / height) - 0.5) * 20;
             rotateY = ((offsetX / width) - 0.5) * -20;
 
