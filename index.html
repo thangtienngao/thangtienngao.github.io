@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Bio</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-y: auto;
+            padding-top: 20px;
+        }
+
+        .bio-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            margin-bottom: 20px;
+            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .bio-container img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bio-container h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #333;
+        }
+
+        .bio-container p {
+            font-size: 16px;
+            color: #777;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .bio-container .social-links a {
+            margin: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .bio-container .social-links a:hover {
+            color: #007BFF;
+        }
+
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .gallery h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .gallery-images {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr); /* 8 ảnh mỗi hàng */
+            gap: 10px;
+            justify-items: center;
+        }
+
+        .gallery-images img {
+            width: 100%; /* Chiều rộng tối đa 100% */
+            height: 150px; /* Chiều cao cố định */
+            object-fit: cover; /* Giữ tỷ lệ mà không bị bóp méo */
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        /* Hiển thị kích thước thật khi di chuột vào */
+        .gallery-images img:hover {
+            transform: scale(1.05); /* Phóng to ảnh một chút khi di chuột */
+        }
+
+        /* Overlay khi click vào ảnh */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none; /* Ẩn overlay mặc định */
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay.active {
+            display: flex; /* Hiển thị overlay khi active */
+        }
+
+        /* Hiển thị kích thước thật khi di chuột vào */
+        .gallery-images img::after {
+            content: attr(data-dimensions); /* Hiển thị chiều rộng và chiều cao */
+            position: absolute;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 10;
+            font-size: 12px;
+            display: none; /* Ẩn mặc định */
+        }
+
+        /* Hiện khi di chuột */
+        .gallery-images img:hover::after {
+            display: block; /* Hiển thị kích thước khi di chuột */
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="bio-container" id="bioContainer">
+        <img src="https://via.placeholder.com/150" alt="Profile Picture">
+        <h1>Your Name</h1>
+        <p>Hello! I'm a web developer passionate about creating interactive and dynamic web applications. I enjoy learning new technologies and sharing knowledge with others.</p>
+        
+        <div class="social-links">
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+            <a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+    </div>
+
+    <div class="gallery">
+        <h2>Gallery</h2>
+        <div class="gallery-images">
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/0sBR5Gb.jpeg" alt="Image 1" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/XZNZ3Lh.jpeg" alt="Image 2" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/rsNSYfG.jpeg" alt="Image 3" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/qL5UJBA.jpeg" alt="Image 4" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/gS8JnU7.jpeg" alt="Image 5" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/bFRw1LS.jpeg" alt="Image 6" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/LTG80eR.jpeg" alt="Image 7" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/KUMWZMu.jpeg" alt="Image 8" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/GywYIiq.jpeg" alt="Image 9" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/Gk9ARvR.jpeg" alt="Image 10" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/ecCI61h.jpeg" alt="Image 11" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/60EFbLb.jpeg" alt="Image 12" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/jyYFS9W.png" alt="Image 13" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/P8SiOkY.png" alt="Image 14" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/xuYn0m6.png" alt="Image 15" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/O9mk61b.jpeg" alt="Image 16" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/7u5wqP9.jpeg" alt="Image 17" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/0MP7kAl.jpeg" alt="Image 18" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/QusLLDO.jpeg" alt="Image 19" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/G8qxLX2.jpeg" alt="Image 20" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/YhgeujX.jpeg" alt="Image 21" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/hDaIWdK.jpeg" alt="Image 22" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/emeSDxu.jpeg" alt="Image 23" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/mNxUwGb.jpeg" alt="Image 24" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/8fD87Cl.jpeg" alt="Image 25" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/ukLfKTI.jpeg" alt="Image 26" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/RCCzqfw.jpeg" alt="Image 27" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/pRwbeh0.jpeg" alt="Image 28" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/QNmKDsJ.jpeg" alt="Image 29" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/zeLGZVv.jpeg" alt="Image 30" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/Lsf5WjX.jpeg" alt="Image 31" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/5Wlal89.jpeg" alt="Image 32" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/u9YT3Fu.jpeg" alt="Image 33" data-dimensions="800x600">
+            </div>
+            <div style="position: relative;">
+                <img src="https://i.imgur.com/g0cDVvt.jpeg" alt="Image 34" data-dimensions="800x600">
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <img id="overlay-img" src="" alt="Overlay Image">
+    </div>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const overlayImg = document.getElementById('overlay-img');
+        const images = document.querySelectorAll('.gallery-images img');
+
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                overlayImg.src = img.src; // Đặt nguồn ảnh cho overlay
+                overlay.classList.add('active'); // Kích hoạt overlay
+            });
+        });
+
+        overlay.addEventListener('click', () => {
+            overlay.classList.remove('active'); // Tắt overlay khi click
+        });
+    </script>
+
+    <script>
+        const bioContainer = document.getElementById('bioContainer');
+        let rotateX = 0, rotateY = 0;
+        let isRequestingFrame = false;
+
+        function updateTransform() {
+            bioContainer.style.transform = perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0);
+            bioContainer.style.boxShadow = ${-rotateY}px ${rotateX}px 20px rgba(0, 0, 0, 0.2);
+            isRequestingFrame = false;
+        }
+
+        function handleMouseMove(e) {
+            const width = bioContainer.offsetWidth;
+            const height = bioContainer.offsetHeight;
+            const offsetX = e.offsetX;
+            const offsetY = e.offsetY;
+
+            // Calculate rotation angles
+            rotateX = ((offsetY / height) - 0.5) * 20;
+            rotateY = ((offsetX / width) - 0.5) * -20;
+
+            if (!isRequestingFrame) {
+                requestAnimationFrame(updateTransform);
+                isRequestingFrame = true;
+            }
+        }
+
+        bioContainer.addEventListener('mousemove', handleMouseMove);
+
+        bioContainer.addEventListener('mouseleave', () => {
+            rotateX = 0;
+            rotateY = 0;
+            updateTransform();
+        });
+    </script>
+
+</body>
+</html>
