@@ -1,228 +1,453 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Bio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Trung Thu</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
     <style>
+        :root {
+            --accent: #ff7f50;
+            --accent-2: #ff5722;
+        }
+
+        html,
         body {
-            font-family: 'Arial', sans-serif;
+            height: 100%;
             margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column; /* Sắp xếp theo chiều dọc */
-            align-items: center;
-            min-height: 100vh; /* Đảm bảo body có chiều cao tối thiểu */
-            overflow-y: auto; /* Cho phép cuộn dọc */
-            padding-top: 20px; /* Thêm khoảng cách ở trên cùng */
+            font-family: "Mali", cursive;
+            background: #060614;
+            overflow: hidden;
         }
 
-        .bio-container {
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            padding: 30px;
-            max-width: 400px;
-            width: 90%; /* Sử dụng 90% chiều rộng để dễ dàng hiển thị trên các màn hình nhỏ */
-            margin-bottom: 20px; /* Khoảng cách giữa bio và gallery */
-            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
-            will-change: transform, box-shadow; /* Tối ưu hoá hiệu suất */
-            position: relative; /* Để có thể điều chỉnh vị trí nếu cần */
-            z-index: 2; /* Đảm bảo nó nằm trên các phần khác */
+        .stage {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
         }
 
-        .bio-container img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .bio-container h1 {
-            font-size: 24px;
-            margin: 0;
-            color: #333;
-        }
-
-        .bio-container p {
-            font-size: 16px;
-            color: #777;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-
-        .bio-container .social-links a {
-            margin: 10px;
-            text-decoration: none;
-            font-size: 20px;
-            color: #333;
-            transition: color 0.3s;
-        }
-
-        .bio-container .social-links a:hover {
-            color: #007BFF;
-        }
-
-        .gallery {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 90%; /* Sử dụng 90% chiều rộng để dễ dàng hiển thị trên các màn hình nhỏ */
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 20px; /* Khoảng cách giữa bio và gallery */
-        }
-
-        .gallery h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .gallery-images {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .gallery-images img {
-            width: 150px;
-            height: 150px;
-            margin: 10px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-
-        .gallery-images img:hover {
-            transform: scale(1.05);
-        }
-
-        .video-container {
-            margin-top: 20px;
+        canvas#starfield {
+            display: block;
             width: 100%;
-            display: flex;
-            justify-content: center;
+            height: 100%;
         }
 
-        .video-container iframe {
-            width: 300px;
-            height: 200px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="bio-container" id="bioContainer">
-        <img src="https://via.placeholder.com/150" alt="Profile Picture">
-        <h1>Your Name</h1>
-        <p>Hello! I'm a web developer passionate about creating interactive and dynamic web applications. I enjoy learning new technologies and sharing knowledge with others.</p>
-        
-        <div class="social-links">
-            <a href="https://facebook.com" target="_blank">Facebook</a>
-            <a href="https://twitter.com" target="_blank">Twitter</a>
-            <a href="https://github.com" target="_blank">GitHub</a>
-        </div>
-    </div>
-
-    <div class="gallery">
-        <h2>Gallery</h2>
-        <div class="gallery-images">
-            <!-- 38 images -->
-            <img src="https://via.placeholder.com/150" alt="Image 1">
-            <img src="https://via.placeholder.com/150" alt="Image 2">
-            <img src="https://via.placeholder.com/150" alt="Image 3">
-            <img src="https://via.placeholder.com/150" alt="Image 4">
-            <img src="https://via.placeholder.com/150" alt="Image 5">
-            <img src="https://via.placeholder.com/150" alt="Image 6">
-            <img src="https://via.placeholder.com/150" alt="Image 7">
-            <img src="https://via.placeholder.com/150" alt="Image 8">
-            <img src="https://via.placeholder.com/150" alt="Image 9">
-            <img src="https://via.placeholder.com/150" alt="Image 10">
-            <img src="https://via.placeholder.com/150" alt="Image 11">
-            <img src="https://via.placeholder.com/150" alt="Image 12">
-            <img src="https://via.placeholder.com/150" alt="Image 13">
-            <img src="https://via.placeholder.com/150" alt="Image 14">
-            <img src="https://via.placeholder.com/150" alt="Image 15">
-            <img src="https://via.placeholder.com/150" alt="Image 16">
-            <img src="https://via.placeholder.com/150" alt="Image 17">
-            <img src="https://via.placeholder.com/150" alt="Image 18">
-            <img src="https://via.placeholder.com/150" alt="Image 19">
-            <img src="https://via.placeholder.com/150" alt="Image 20">
-            <img src="https://via.placeholder.com/150" alt="Image 21">
-            <img src="https://via.placeholder.com/150" alt="Image 22">
-            <img src="https://via.placeholder.com/150" alt="Image 23">
-            <img src="https://via.placeholder.com/150" alt="Image 24">
-            <img src="https://via.placeholder.com/150" alt="Image 25">
-            <img src="https://via.placeholder.com/150" alt="Image 26">
-            <img src="https://via.placeholder.com/150" alt="Image 27">
-            <img src="https://via.placeholder.com/150" alt="Image 28">
-            <img src="https://via.placeholder.com/150" alt="Image 29">
-            <img src="https://via.placeholder.com/150" alt="Image 30">
-            <img src="https://via.placeholder.com/150" alt="Image 31">
-            <img src="https://via.placeholder.com/150" alt="Image 32">
-            <img src="https://via.placeholder.com/150" alt="Image 33">
-            <img src="https://via.placeholder.com/150" alt="Image 34">
-            <img src="https://via.placeholder.com/150" alt="Image 35">
-            <img src="https://via.placeholder.com/150" alt="Image 36">
-            <img src="https://via.placeholder.com/150" alt="Image 37">
-            <img src="https://via.placeholder.com/150" alt="Image 38">
-        </div>
-
-        <h2>Videos</h2>
-        <div class="video-container">
-            <!-- 5 videos -->
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <script>
-        const bioContainer = document.getElementById('bioContainer');
-        let rotateX = 0, rotateY = 0;
-        let isRequestingFrame = false;
-
-        function updateTransform() {
-            bioContainer.style.transform = perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0);
-            bioContainer.style.boxShadow = ${-rotateY}px ${rotateX}px 20px rgba(0, 0, 0, 0.2);
-            isRequestingFrame = false;
+        .moon {
+            position: absolute;
+            top: 60px;
+            right: 100px;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at 30% 30%, #fff, #f8f8f8 70%, #e0e0e0 100%);
+            border-radius: 50%;
+            /* sửa màu trăng */
+            box-shadow:
+                0 0 50px #ffffff7a,
+                0 0 80px rgba(255, 255, 255, 0.7),
+                0 0 100ox rgba(255, 255, 255, 0.4);
+            filter: drop-shadow(0 0 25px rgba(255, 255, 200, 0.8));
+            animation: moonGlow 6s ease-in-out infinite;
+            z-index: 10;
         }
 
-        function handleMouseMove(e) {
-            const width = bioContainer.offsetWidth;
-            const height = bioContainer.offsetHeight;
-            const offsetX = e.offsetX;
-            const offsetY = e.offsetY;
+        @media (max-width:600px) {
+            .moon {
+                top: 40px;
+                right: 14px;
+                width: 70px;
+                height: 70px;
+            }
 
-            // Tính toán góc xoay
-            rotateX = ((offsetY / height) - 0.5) * 20;
-            rotateY = ((offsetX / width) - 0.5) * -20;
+        }
 
-            if (!isRequestingFrame) {
-                requestAnimationFrame(updateTransform);
-                isRequestingFrame = true;
+        #lantern-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .lantern {
+            position: absolute;
+            pointer-events: auto;
+            width: 40px;
+            user-select: none;
+        }
+
+        @keyframes swing {
+            0% {
+                transform: rotate(-5deg);
+            }
+
+            50% {
+                transform: rotate(5deg);
+            }
+
+            100% {
+                transform: rotate(-5deg);
             }
         }
 
-        bioContainer.addEventListener('mousemove', handleMouseMove);
+        .swing {
+            animation: swing 2s ease-in-out infinite;
+        }
 
-        bioContainer.addEventListener('mouseleave', () => {
-            rotateX = 0;
-            rotateY = 0;
-            updateTransform();
+        #hint {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0);
+            color: #ffa722;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 28px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1000;
+            pointer-events: none;
+            text-align: center;
+            white-space: nowrap;
+            text-shadow:
+                0 0 15px #ff8a50,
+                0 0 20px #ffd180;
+
+        }
+
+        @media (max-width: 600px) {
+            #hint {
+                font-size: 22px;
+                padding: 8px 12px;
+            }
+        }
+
+        #wish-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.96);
+            color: #ff8d22;
+            padding: 35px 40px;
+            border-radius: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: none;
+            z-index: 9999;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
+            text-align: center;
+            max-width: 60%;
+            width: auto;
+            box-sizing: border-box;
+            pointer-events: auto;
+            text-shadow:
+                0 0 25px #ffd180;
+            box-shadow:
+                0 0 20px #ff8a50,
+                0 0 25px #ffd180;
+        }
+
+        @media (max-width: 600px) {
+            #wish-popup {
+                font-size: 1.2rem;
+                padding: 20px 25px;
+                max-width: 80%;
+                width: 80%;
+            }
+        }
+
+        .controls {
+            position: fixed;
+            left: 18px;
+            top: 18px;
+            z-index: 10;
+            color: #fff;
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
+            border-radius: 10px;
+        }
+
+        .music-toggle {
+            cursor: pointer;
+            margin-left: 10px;
+            color: #fff;
+            opacity: 0.95;
+        }
+
+        #bottom-image-container {
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            transform: none;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        #bottom-image-container img {
+            height: 80px;
+            width: auto;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            #bottom-image-container img {
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage">
+        <canvas id="starfield"></canvas>
+
+        <div class="moon" aria-hidden="true"></div>
+
+        <div id="lantern-container"></div>
+
+        <div id="wish-popup" role="dialog" aria-live="polite"></div>
+
+        <div id="bottom-image-container">
+            <!-- <img src="./ass.png" alt="Trang trí Trung Thu" /> -->
+        </div>
+
+        <!-- Sử phần hướng dẫn ở đây -->
+        <div id="hint">Chạm vào đèn trời</div>
+
+        <!-- Nhạc sửa nhạc nền -->
+        <audio id="bg-music" loop>
+            <source src="a.mp3" type="audio/mp3">
+            Trình duyệt của bạn không hỗ trợ thẻ audio.
+        </audio>
+    </div>
+
+    <script>
+        // ===== Canvas sao và sao băng =====
+        const canvas = document.getElementById("starfield");
+        const ctx = canvas.getContext("2d");
+        let w, h, stars = [], meteors = [];
+
+        function resizeCanvas() {
+            w = canvas.width = innerWidth;
+            h = canvas.height = innerHeight;
+            stars = [];
+            const count = Math.round((w * h) / 2200);
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 0.9 + 0.1,
+                    a: Math.random() * 0.8 + 0.2,
+                    t: Math.random() * 0.02 + 0.002
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, w, h);
+            for (const s of stars) {
+                s.a += (Math.random() > 0.5 ? 1 : -1) * s.t;
+                s.a = Math.max(0.05, Math.min(1, s.a));
+                ctx.beginPath();
+                ctx.globalAlpha = s.a;
+                ctx.fillStyle = "#fff";
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        function createMeteor() {
+            const startX = Math.random() * w;
+            const startY = Math.random() * (h / 3);
+            const speed = Math.random() * 10 + 6;
+            meteors.push({
+                x: startX,
+                y: startY,
+                vx: speed + 6,
+                vy: speed / 2,
+                len: Math.random() * 120 + 100,
+                a: 1
+            });
+        }
+
+        function drawMeteors() {
+            for (let i = meteors.length - 1; i >= 0; i--) {
+                const m = meteors[i];
+                const x2 = m.x - m.len;
+                const y2 = m.y - m.len / 2;
+                const g = ctx.createLinearGradient(m.x, m.y, x2, y2);
+                g.addColorStop(0, `rgba(255,255,255,${m.a})`);
+                g.addColorStop(1, "rgba(255,255,255,0)");
+                ctx.strokeStyle = g;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(m.x, m.y);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+                m.x += m.vx;
+                m.y += m.vy;
+                m.a -= 0.02;
+                if (m.a <= 0 || m.x > w + 200 || m.y > h + 200) meteors.splice(i, 1);
+            }
+            ctx.strokeStyle = "#fff";
+            ctx.lineWidth = 1;
+        }
+
+        function loop() {
+            drawStars();
+            drawMeteors();
+            if (Math.random() < 0.01) createMeteor();
+            requestAnimationFrame(loop);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        loop();
+
+        // ===== Đèn lồng và lời chúc =====
+        const lanternContainer = document.getElementById("lantern-container");
+        //Sử lời chúc ở đây
+        const wishes = [
+            "Chúc bạn Trung Thu ấm áp, hạnh phúc!",
+            "Chúc gia đình bạn đoàn viên, vui vẻ!",
+            "Mùa trăng an lành và ngọt ngào!",
+            "Chúc bạn luôn sáng như trăng rằm!",
+            "Mong ước thành hiện thực nhé!"
+        ];
+
+        function createLantern() {
+            const lantern = document.createElement("img");
+            // sửa đèn lồng ở đây
+            lantern.src = "./den.png";
+            lantern.className = "lantern swing";
+
+            const layer = Math.floor(Math.random() * 3) + 1;
+            let size = 40, duration = 10000, opacity = 0.8;
+
+            if (layer === 1) {
+                size = 20 + Math.random() * 20;
+                duration = 14000 + Math.random() * 5000;
+                opacity = 0.5;
+            } else if (layer === 2) {
+                size = 30 + Math.random() * 30;
+                duration = 12000 + Math.random() * 4000;
+                opacity = 0.7;
+            } else {
+                size = 40 + Math.random() * 40;
+                duration = 10000 + Math.random() * 3000;
+                opacity = 0.95;
+            }
+
+            lantern.style.width = size + "px";
+            lantern.style.left = Math.random() * 90 + "vw";
+            lantern.style.bottom = "0px";
+            lantern.style.opacity = opacity;
+
+            lanternContainer.appendChild(lantern);
+
+            const drift = Math.random() * 140 - 70;
+            const up = 120 + Math.random() * 40;
+            lantern.animate(
+                [
+                    { transform: "translate(0,0)", opacity: opacity },
+                    { transform: `translate(${drift}px, -${up}vh)`, opacity: 0 }
+                ],
+                { duration: duration, easing: "linear", fill: "forwards" }
+            );
+
+            setTimeout(() => lantern.remove(), duration);
+
+            lantern.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const wishPopup = document.getElementById("wish-popup");
+                wishPopup.textContent = wishes[Math.floor(Math.random() * wishes.length)];
+                wishPopup.style.display = "block";
+            });
+        }
+
+        setInterval(createLantern, 500);
+
+        // ===== Nhạc nền =====
+        const bg = document.getElementById("bg-music");
+        const hint = document.getElementById("hint");
+        let musicStarted = false;
+
+        document.addEventListener("pointerdown", function startMusicOnce() {
+            if (!musicStarted && bg) {
+
+                bg.volume = 0;
+                bg.play().then(() => {
+                    let v = 0;
+                    const fadeIn = setInterval(() => {
+                        v += 0.05;
+                        if (v >= 0.9) {
+                            v = 0.9;
+                            clearInterval(fadeIn);
+                        }
+                        bg.volume = v;
+                    }, 120);
+                    musicStarted = true;
+
+                    for (let i = 0; i < 4; i++) {
+                        setTimeout(createLantern, i * 300);
+                    }
+                }).catch(() => { });
+            }
+            document.removeEventListener("pointerdown", startMusicOnce);
         });
+
+        // ===== Ẩn popup khi click ngoài =====
+        document.addEventListener("click", (e) => {
+            const pop = document.getElementById("wish-popup");
+            if (pop && pop.style.display === "block") {
+                pop.style.display = "none";
+            }
+        });
+
+        document.addEventListener("pointerdown", function startMusicOnce() {
+            if (!musicStarted && bg) {
+                bg.volume = 0;
+                bg.play().then(() => {
+                    let v = 0;
+                    const fadeIn = setInterval(() => {
+                        v += 0.05;
+                        if (v >= 0.9) {
+                            v = 0.9;
+                            clearInterval(fadeIn);
+                        }
+                        bg.volume = v;
+                    }, 120);
+                    musicStarted = true;
+                }).catch((e) => {
+                    console.log("Không thể phát nhạc:", e);
+                });
+            }
+            document.removeEventListener("pointerdown", startMusicOnce);
+        });
+
+        setTimeout(() => {
+            if (hint) {
+                hint.style.opacity = "1";
+            }
+
+            setTimeout(() => {
+                if (hint) {
+                    hint.style.opacity = "0";
+                }
+            }, 5000);
+        }, 1000);
     </script>
 
 </body>
+
 </html>
